@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -18,8 +17,24 @@ namespace Converter.ViewModel
         public MainViewModel()
         {
             httpClient = new HttpClient();
-            CurrencyList = new List<Currency>();
+            SelectedDate = DateTime.Parse(Preferences.Get("date", DateTime.Now.ToString()));
             CurrencyList = GetCurrencyList();
+            FirstValue = Preferences.Get("firstValue", "");
+            if (!Preferences.ContainsKey("firstCurr"))
+                FirstCurr = CurrencyList[new Random().Next(CurrencyList.Count)];
+            else
+            {
+                string curr = Preferences.Get("firstCurr", "");
+                FirstCurr = CurrencyList.First(x => x.CharCode == curr);
+            }
+            if (!Preferences.ContainsKey("secondCurr"))
+                SecondCurr = CurrencyList[new Random().Next(CurrencyList.Count)];
+            else
+            {
+                string curr = Preferences.Get("secondCurr", "");
+                SecondCurr = CurrencyList.First(x => x.CharCode == curr);
+            }
+            
         }
 
         private List<Currency> _currencyList;
@@ -33,7 +48,7 @@ namespace Converter.ViewModel
             }
         }
 
-        private DateTime _selectedDate = DateTime.Now;
+        private DateTime _selectedDate;
         public DateTime SelectedDate
         {
             get => _selectedDate;
@@ -41,7 +56,7 @@ namespace Converter.ViewModel
             {
                 _selectedDate = value;
                 CurrencyList = GetCurrencyList();
-                //Preferences.Set("Date", _selectedDate.ToString());
+                Preferences.Set("date", _selectedDate.ToString());
                 SecondValue = "";
                 OnPropertyChanged(nameof(SelectedDate));
             }
@@ -65,7 +80,7 @@ namespace Converter.ViewModel
                 _firstCurr = value;
                 
                 RecountCurrencies();
-                //Preferences.Set("FromCoin", value?.CharCode);
+                Preferences.Set("firstCurr", value?.CharCode);
                 OnPropertyChanged(nameof(FirstCurr));
             }
         }
@@ -78,7 +93,7 @@ namespace Converter.ViewModel
             {
                 _secondCurr = value;
                 RecountCurrencies();
-                //Preferences.Set("ToCoin", value?.CharCode);
+                Preferences.Set("secondCurr", value?.CharCode);
                 OnPropertyChanged(nameof(SecondCurr));
             }
         }
@@ -91,7 +106,7 @@ namespace Converter.ViewModel
             {
                 _firstValue = value;
                 RecountCurrencies();
-                //Preferences.Set("FromValue", _firstValue);
+                Preferences.Set("firstValue", _firstValue);
                 OnPropertyChanged(nameof(FirstValue));
             }
         }
@@ -117,7 +132,7 @@ namespace Converter.ViewModel
                 string result = httpClient.GetStringAsync(uri).Result;
                 string allValutesString = JObject.Parse(result)["Valute"]?.ToString();
                 var allValutesDictionary = JsonConvert.DeserializeObject<Dictionary<string, Currency>>(allValutesString);
-                return allValutesDictionary?.Select(x => x.Value)?.ToList();
+                return allValutesDictionary.Select(x => x.Value).ToList();
             }
             catch (Exception e)
             {
