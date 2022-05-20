@@ -13,6 +13,22 @@
                 <GradientStop Color="#211316" Offset="1.0" />
             </LinearGradientBrush>
         </StackLayout.Background>
+        <Frame Padding="0" CornerRadius="7">
+            <FlexLayout BackgroundColor="White">
+                <Image FlexLayout.Basis="20%" Source="calendar.png"
+                HeightRequest="50" BackgroundColor="Transparent"
+                FlexLayout.AlignSelf="Center" />
+                <DatePicker FlexLayout.Basis="80%"
+                    Date="{Binding SelectedDate, Mode=TwoWay}"
+                    BackgroundColor="White" x:Name="datePicker"
+                    FontSize="24" HeightRequest="65"
+                    TextColor="#181818" >
+                    <DatePicker.Effects>
+                        <effects:PlainEntry/>
+                    </DatePicker.Effects>
+                </DatePicker>
+            </FlexLayout>
+        </Frame>
         <Frame Padding="0" CornerRadius="7" VerticalOptions="Center" HorizontalOptions="Center">
             <FlexLayout>
                 <Frame CornerRadius="0" Padding="0, 0, 20, 0"

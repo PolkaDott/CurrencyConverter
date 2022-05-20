@@ -42,6 +42,7 @@ namespace Converter.ViewModel
                 _selectedDate = value;
                 CurrencyList = GetCurrencyList();
                 //Preferences.Set("Date", _selectedDate.ToString());
+                SecondValue = "";
                 OnPropertyChanged(nameof(SelectedDate));
             }
         }
@@ -62,6 +63,7 @@ namespace Converter.ViewModel
             set
             {
                 _firstCurr = value;
+                
                 RecountCurrencies();
                 //Preferences.Set("FromCoin", value?.CharCode);
                 OnPropertyChanged(nameof(FirstCurr));
@@ -90,7 +92,7 @@ namespace Converter.ViewModel
                 _firstValue = value;
                 RecountCurrencies();
                 //Preferences.Set("FromValue", _firstValue);
-                OnPropertyChanged(nameof(SecondValue));
+                OnPropertyChanged(nameof(FirstValue));
             }
         }
 
