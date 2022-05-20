@@ -20,7 +20,7 @@
                      BorderColor="#e7e7e7">
                     <Entry Placeholder="0" BackgroundColor="White"
                         HorizontalTextAlignment="End" FontSize="36"
-                           TextColor="#181818" Text="183292" 
+                           TextColor="#181818" Text="{Binding FirstValue, Mode=TwoWay}"
                            FontFamily="Arial">
                         <Entry.Effects>
                             <effects:PlainEntry/>
@@ -30,7 +30,33 @@
                 <Frame FlexLayout.Basis="20%" Padding="0">
                     <Picker BackgroundColor="White" ItemsSource="{Binding CurrencyList}"
                         ItemDisplayBinding="{Binding CharCode}" HorizontalTextAlignment="Center"
-                        >
+                        SelectedItem="{Binding FirstCurr, Mode=TwoWay}">
+                        <Picker.Effects>
+                            <effects:PlainEntry/>
+                        </Picker.Effects>
+                    </Picker>
+                </Frame>
+            </FlexLayout>
+        </Frame>
+        <Frame Padding="0" CornerRadius="7" VerticalOptions="Center" HorizontalOptions="Center">
+            <FlexLayout>
+                <Frame CornerRadius="0" Padding="0, 0, 20, 0"
+                    FlexLayout.Basis="80%"  HeightRequest="80"
+                     BorderColor="#e7e7e7">
+                    <Entry Placeholder="0" BackgroundColor="White"
+                        HorizontalTextAlignment="End" FontSize="36"
+                           TextColor="#181818" FontFamily="Arial" IsReadOnly="True"
+                           
+                           Text="{Binding SecondValue, Mode=TwoWay}">
+                        <Entry.Effects>
+                            <effects:PlainEntry/>
+                        </Entry.Effects>
+                    </Entry>
+                </Frame>
+                <Frame FlexLayout.Basis="20%" Padding="0">
+                    <Picker BackgroundColor="White" ItemsSource="{Binding CurrencyList}"
+                        ItemDisplayBinding="{Binding CharCode}" HorizontalTextAlignment="Center"
+                        SelectedItem="{Binding SecondCurr, Mode=TwoWay}">
                         <Picker.Effects>
                             <effects:PlainEntry/>
                         </Picker.Effects>

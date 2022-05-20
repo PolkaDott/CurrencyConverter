@@ -46,6 +46,66 @@ namespace Converter.ViewModel
             }
         }
 
+        private void RecountCurrencies()
+        {
+            double a;
+            if (Double.TryParse(FirstValue, out a) && SecondCurr != null && FirstCurr != null)
+            {
+                SecondValue = $"{a * (FirstCurr.Value / FirstCurr.Nominal) / (SecondCurr.Value / SecondCurr.Nominal):0.00}";
+            }
+        }
+
+        private Currency _firstCurr;
+        public Currency FirstCurr
+        {
+            get => _firstCurr;
+            set
+            {
+                _firstCurr = value;
+                RecountCurrencies();
+                //Preferences.Set("FromCoin", value?.CharCode);
+                OnPropertyChanged(nameof(FirstCurr));
+            }
+        }
+
+        private Currency _secondCurr;
+        public Currency SecondCurr
+        {
+            get => _secondCurr;
+            set
+            {
+                _secondCurr = value;
+                RecountCurrencies();
+                //Preferences.Set("ToCoin", value?.CharCode);
+                OnPropertyChanged(nameof(SecondCurr));
+            }
+        }
+
+        private string _firstValue;
+        public string FirstValue
+        {
+            get => _firstValue;
+            set
+            {
+                _firstValue = value;
+                RecountCurrencies();
+                //Preferences.Set("FromValue", _firstValue);
+                OnPropertyChanged(nameof(SecondValue));
+            }
+        }
+
+        private string _secondValue;
+
+        public string SecondValue
+        {
+            get => _secondValue;
+            set
+            {
+                _secondValue = value;
+                OnPropertyChanged(nameof(SecondValue));
+            }
+        }
+
         public List<Currency> GetCurrencyList()
         {
             try
