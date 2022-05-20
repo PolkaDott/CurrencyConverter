@@ -9,6 +9,7 @@ namespace Converter
         {
             InitializeComponent();
             BindingContext = new MainViewModel();
+            //uglyFrame.Padding = new Thickness(0, 0, 20, 0);
         }
     }
 }

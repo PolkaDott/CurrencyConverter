@@ -2,22 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:effects="clr-namespace:Converter.Effects"
+             xmlns:local="clr-namespace:Converter.ViewModel;assembly=Converter"
+             x:DataType="local:MainViewModel"
              x:Class="Converter.MainPage">
 
-    <StackLayout Padding="80 20" >
+    <StackLayout Padding="20, 80" >
         <StackLayout.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Color="#60312b" Offset="0.1" />
                 <GradientStop Color="#211316" Offset="1.0" />
             </LinearGradientBrush>
         </StackLayout.Background>
-        <Frame Padding="0" CornerRadius="5" VerticalOptions="Center" HorizontalOptions="Center">
+        <Frame Padding="0" CornerRadius="7" VerticalOptions="Center" HorizontalOptions="Center">
             <FlexLayout>
-                <Frame CornerRadius="0" Padding="0 20 0 0"
-                    FlexLayout.Basis="80%"  HeightRequest="65"
+                <Frame CornerRadius="0" Padding="0, 0, 20, 0"
+                    FlexLayout.Basis="80%"  HeightRequest="80"
                      BorderColor="#e7e7e7">
                     <Entry Placeholder="0" BackgroundColor="White"
-                        HorizontalTextAlignment="End" FontSize="32"
+                        HorizontalTextAlignment="End" FontSize="36"
                            TextColor="#181818" Text="183292" 
                            FontFamily="Arial">
                         <Entry.Effects>
@@ -26,7 +28,9 @@
                     </Entry>
                 </Frame>
                 <Frame FlexLayout.Basis="20%" Padding="0">
-                    <Picker BackgroundColor="White">
+                    <Picker BackgroundColor="White" ItemsSource="{Binding CurrencyList}"
+                        ItemDisplayBinding="{Binding CharCode}" HorizontalTextAlignment="Center"
+                        >
                         <Picker.Effects>
                             <effects:PlainEntry/>
                         </Picker.Effects>
